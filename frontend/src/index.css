@@ -5,22 +5,26 @@ body {
 }
 
 nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: #007bff;
-  padding: 10px;
+  padding: 10px 20px;
 }
 
 nav a {
   color: white;
   text-decoration: none;
   padding: 8px 12px;
-  border-radius: 4px;
   margin-right: 10px;
+  border-radius: 4px;
   transition: background 0.3s;
 }
 
 nav a:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
+
 
 .container {
   width: 600px;
@@ -36,4 +40,16 @@ button {
   padding: 6px 12px;
   margin-top: 10px;
   cursor: pointer;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 8px;
+  margin: 6px 0;
+}
+
+form {
+  background: white;
+  padding: 20px;
+  border-radius: 6px;
 }
