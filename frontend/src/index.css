@@ -25,31 +25,67 @@ nav a:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-
 .container {
-  width: 600px;
+  width: 900px;
   margin: auto;
-  padding: 20px 0;
+  margin-top: 10px;
+  padding: 20px 20px;
+  background-color: #f0f8ff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 h1 {
   text-align: center;
 }
 
-button {
-  padding: 6px 12px;
-  margin-top: 10px;
-  cursor: pointer;
+.filters {
+  display: flex;
+  gap: 10px;
+  margin: 12px 0;
 }
 
 input, textarea, select {
-  width: 100%;
-  padding: 8px;
-  margin: 6px 0;
+  width: 95%;
+  padding: 10px 12px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
 }
 
 form {
   background: white;
   padding: 20px;
   border-radius: 6px;
+}
+
+button {
+  padding: 10px 16px;
+  margin-top: 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #007bff;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s, box-shadow 0.1s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.logout-btn {
+  background-color: #dc3545;
+}
+
+.logout-btn:hover {
+  background-color: #b02a37;
 }

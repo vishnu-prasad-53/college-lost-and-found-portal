@@ -1,47 +1,52 @@
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 function SignIn() {
-  const [data, setData] = useState({
-    email: "",
-    password: "",
-  });
+  const { login } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
+  const submit = (e) => {
     e.preventDefault();
-    alert("Signed in successfully (demo)");
+    setLoading(true);
+
+    setTimeout(() => {
+      login(email);
+      setLoading(false);
+    }, 800);
   };
 
   return (
     <div className="container">
       <h2>Sign In</h2>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={submit}>
         <input
           type="email"
-          name="email"
           placeholder="Email"
-          value={data.email}
-          onChange={handleChange}
           required
+          value={email}
+          onChange={e => setEmail(e.target.value)}
         />
-        <br />
 
         <input
           type="password"
-          name="password"
           placeholder="Password"
-          value={data.password}
-          onChange={handleChange}
           required
+          value={password}
+          onChange={e => setPassword(e.target.value)}
         />
-        <br />
 
-        <button type="submit">Sign In</button>
+        <button disabled={loading}>
+          {loading ? "Signing in..." : "Sign In"}
+        </button>
       </form>
+
+      <p>
+        Don’t have an account? <Link to="/signup">Sign Up</Link>
+      </p>
     </div>
   );
 }

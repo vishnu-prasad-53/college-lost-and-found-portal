@@ -1,17 +1,46 @@
-import React from "react";
+import { useState } from "react";
+import ItemCard from "../components/ItemCard";
+
+const DUMMY_ITEMS = [
+  {
+    id: "1",
+    title: "Wallet",
+    description: "Black leather wallet near library",
+    type: "lost",
+    contact: "1234567890",
+    createdBy: { id: "1", name: "Demo User" },
+    createdAt: Date.now(),
+  },
+];
 
 function Home() {
+  const [items, setItems] = useState(DUMMY_ITEMS);
+  const [filter, setFilter] = useState("all");
+
+  const filteredItems =
+    filter === "all" ? items : items.filter(i => i.type === filter);
+
+  const deleteItem = (id) => {
+    setItems(items.filter(item => item.id !== id));
+  };
+
   return (
     <div className="container">
       <h1>College Lost & Found</h1>
-      <p>This is the home page. You can see lost and found items here.</p>
-      <div style={{ background: "#fff", padding: "10px", margin: "10px 0", borderRadius: "5px" }}>
-        <h2>John Doe</h2>
-        <h3>Lost: Wallet</h3>
-        <p>Description: Black leather wallet near library.</p>
-        <p>Contact: 1234567890</p>
-        <button>Contact</button>
+
+      <div className="filters">
+        <button onClick={() => setFilter("all")}>All</button>
+        <button onClick={() => setFilter("lost")}>Lost</button>
+        <button onClick={() => setFilter("found")}>Found</button>
       </div>
+
+      {filteredItems.length === 0 ? (
+        <p>No items posted yet.</p>
+      ) : (
+        filteredItems.map(item => (
+          <ItemCard key={item.id} item={item} onDelete={deleteItem} />
+        ))
+      )}
     </div>
   );
 }

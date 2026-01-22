@@ -1,57 +1,35 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function SignUp() {
-  const [data, setData] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+  const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
+  const submit = (e) => {
     e.preventDefault();
-    alert("Account created successfully (demo)");
+    setLoading(true);
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 800);
   };
 
   return (
     <div className="container">
       <h2>Sign Up</h2>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          name="name"
-          placeholder="Full Name"
-          value={data.name}
-          onChange={handleChange}
-          required
-        />
-        <br />
+      <form onSubmit={submit}>
+        <input placeholder="Full Name" required />
+        <input type="email" placeholder="Email" required />
+        <input type="password" placeholder="Password" required />
 
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={data.email}
-          onChange={handleChange}
-          required
-        />
-        <br />
-
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={data.password}
-          onChange={handleChange}
-          required
-        />
-        <br />
-
-        <button type="submit">Sign Up</button>
+        <button disabled={loading}>
+          {loading ? "Creating..." : "Sign Up"}
+        </button>
       </form>
+
+      <p>
+        Already have an account? <Link to="/signin">Sign In</Link>
+      </p>
     </div>
   );
 }

@@ -1,4 +1,3 @@
-import React from "react";
 import { useState } from "react";
 
 function AddItem() {
@@ -9,50 +8,53 @@ function AddItem() {
     contact: "",
   });
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const [success, setSuccess] = useState(false);
 
-  const handleSubmit = (e) => {
+  const submit = (e) => {
     e.preventDefault();
-    alert(`Item submitted!\n${JSON.stringify(form, null, 2)}`);
+    setSuccess(true);
     setForm({ title: "", description: "", type: "lost", contact: "" });
+
+    setTimeout(() => setSuccess(false), 2000);
   };
 
   return (
     <div className="container">
-      <h2>Add Lost/Found Item</h2>
-      <form onSubmit={handleSubmit}>
+      <h2>Report {form.type === "lost" ? "Lost" : "Found"} Item</h2>
+
+      {success && <p className="success">Item posted successfully!</p>}
+
+      <form onSubmit={submit}>
         <input
-          name="title"
           placeholder="Title"
           value={form.title}
-          onChange={handleChange}
+          onChange={e => setForm({ ...form, title: e.target.value })}
           required
         />
-        <br />
+
         <textarea
-          name="description"
           placeholder="Description"
           value={form.description}
-          onChange={handleChange}
+          onChange={e => setForm({ ...form, description: e.target.value })}
           required
         />
-        <br />
-        <select name="type" value={form.type} onChange={handleChange}>
+
+        <select
+          value={form.type}
+          onChange={e => setForm({ ...form, type: e.target.value })}
+        >
           <option value="lost">Lost</option>
           <option value="found">Found</option>
         </select>
-        <br />
+
         <input
-          name="contact"
-          placeholder="Contact Info"
+          placeholder="Contact info"
           value={form.contact}
-          onChange={handleChange}
+          onChange={e => setForm({ ...form, contact: e.target.value })}
           required
         />
-        <br />
-        <button type="submit">Submit Item</button>
+
+        <button>Submit</button>
       </form>
     </div>
   );
