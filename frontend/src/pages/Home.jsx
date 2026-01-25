@@ -13,36 +13,54 @@ const DUMMY_ITEMS = [
   },
 ];
 
-function Home() {
-  const [items, setItems] = useState(DUMMY_ITEMS);
+function Home({ items, onDelete, onEdit }) {
   const [filter, setFilter] = useState("all");
+  const [search, setSearch] = useState("");
 
-  const filteredItems =
-    filter === "all" ? items : items.filter(i => i.type === filter);
+  const filteredItems = items.filter(item => {
+    const matchesFilter =
+      filter === "all" || item.type === filter;
 
-  const deleteItem = (id) => {
-    setItems(items.filter(item => item.id !== id));
-  };
+    const matchesSearch =
+      item.title.toLowerCase().includes(search.toLowerCase()) ||
+      item.description.toLowerCase().includes(search.toLowerCase());
+
+    return matchesFilter && matchesSearch;
+  });
 
   return (
     <div className="container">
       <h1>College Lost & Found</h1>
 
+      <input
+        placeholder="Search items..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+
       <div className="filters">
-        <button onClick={() => setFilter("all")}>All</button>
-        <button onClick={() => setFilter("lost")}>Lost</button>
-        <button onClick={() => setFilter("found")}>Found</button>
+        {["all", "lost", "found"].map(t => (
+          <button
+            key={t}
+            className={filter === t ? "active" : ""}
+            onClick={() => setFilter(t)}
+          >
+            {t.toUpperCase()}
+          </button>
+        ))}
       </div>
 
-      {filteredItems.length === 0 ? (
-        <p>No items posted yet.</p>
-      ) : (
-        filteredItems.map(item => (
-          <ItemCard key={item.id} item={item} onDelete={deleteItem} />
-        ))
-      )}
+      {filteredItems.map(item => (
+        <ItemCard
+          key={item.id}
+          item={item}
+          onDelete={onDelete}
+          onEdit={onEdit}
+        />
+      ))}
     </div>
   );
 }
+
 
 export default Home;

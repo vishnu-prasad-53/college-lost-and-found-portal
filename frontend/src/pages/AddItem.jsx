@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
-function AddItem() {
+function AddItem({ onAdd, editingItem, onUpdate }) {
+  const { user } = useAuth();
+
   const [form, setForm] = useState({
     title: "",
     description: "",
@@ -8,21 +11,30 @@ function AddItem() {
     contact: "",
   });
 
-  const [success, setSuccess] = useState(false);
+  useEffect(() => {
+    if (editingItem) setForm(editingItem);
+  }, [editingItem]);
 
   const submit = (e) => {
     e.preventDefault();
-    setSuccess(true);
-    setForm({ title: "", description: "", type: "lost", contact: "" });
 
-    setTimeout(() => setSuccess(false), 2000);
+    if (editingItem) {
+      onUpdate({ ...form });
+    } else {
+      onAdd({
+        ...form,
+        id: Date.now().toString(),
+        createdBy: user,
+        createdAt: Date.now(),
+      });
+    }
+
+    setForm({ title: "", description: "", type: "lost", contact: "" });
   };
 
   return (
     <div className="container">
-      <h2>Report {form.type === "lost" ? "Lost" : "Found"} Item</h2>
-
-      {success && <p className="success">Item posted successfully!</p>}
+      <h2>{editingItem ? "Edit Item" : "Add Item"}</h2>
 
       <form onSubmit={submit}>
         <input
@@ -31,14 +43,12 @@ function AddItem() {
           onChange={e => setForm({ ...form, title: e.target.value })}
           required
         />
-
         <textarea
           placeholder="Description"
           value={form.description}
           onChange={e => setForm({ ...form, description: e.target.value })}
           required
         />
-
         <select
           value={form.type}
           onChange={e => setForm({ ...form, type: e.target.value })}
@@ -46,15 +56,13 @@ function AddItem() {
           <option value="lost">Lost</option>
           <option value="found">Found</option>
         </select>
-
         <input
           placeholder="Contact info"
           value={form.contact}
           onChange={e => setForm({ ...form, contact: e.target.value })}
           required
         />
-
-        <button>Submit</button>
+        <button>{editingItem ? "Update" : "Submit"}</button>
       </form>
     </div>
   );

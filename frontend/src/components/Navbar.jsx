@@ -9,6 +9,7 @@ function Navbar() {
       <div>
         <Link to="/">Home</Link>
         {user && <Link to="/add">Add Item</Link>}
+        <Link to="/myposts">My Posts</Link>
       </div>
 
       <div>
