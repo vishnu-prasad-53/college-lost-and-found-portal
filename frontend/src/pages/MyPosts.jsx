@@ -1,7 +1,7 @@
 import { useAuth } from "../context/AuthContext";
 import ItemCard from "../components/ItemCard";
 
-function MyPosts({ items, onDelete }) {
+function MyPosts({ items, onDelete, onEdit }) {
   const { user } = useAuth();
 
   const myItems = items.filter(
@@ -20,6 +20,7 @@ function MyPosts({ items, onDelete }) {
             key={item.id}
             item={item}
             onDelete={onDelete}
+            onEdit={onEdit}
           />
         ))
       )}

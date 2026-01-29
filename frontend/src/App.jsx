@@ -29,36 +29,51 @@ function App() {
   const deleteItem = (id) =>
     setItems(items.filter(item => item.id !== id));
 
-  const updateItem = (updated) =>
-    setItems(items.map(i => i.id === updated.id ? updated : i));
+  const updateItem = (updatedItem) =>
+    setItems(items.map(i => i.id === updatedItem.id ? updatedItem : i));
 
   return (
     <>
       <Navbar />
+
       <Routes>
-        <Route path="/" element={
-          <Home
-            items={items}
-            onDelete={deleteItem}
-            onEdit={setEditingItem}
-          />
-        } />
-
-        <Route path="/add" element={
-          <ProtectedRoute>
-            <AddItem
-              onAdd={addItem}
-              editingItem={editingItem}
-              onUpdate={updateItem}
+        <Route
+          path="/"
+          element={
+            <Home
+              items={items}
+              onDelete={deleteItem}
+              onEdit={setEditingItem}
             />
-          </ProtectedRoute>
-        } />
+          }
+        />
 
-        <Route path="/myposts" element={
-          <ProtectedRoute>
-            <MyPosts items={items} onDelete={deleteItem} />
-          </ProtectedRoute>
-        } />
+        <Route
+          path="/add"
+          element={
+            <ProtectedRoute>
+              <AddItem
+                onAdd={addItem}
+                editingItem={editingItem}
+                onUpdate={updateItem}
+                clearEdit={() => setEditingItem(null)}
+              />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/myposts"
+          element={
+            <ProtectedRoute>
+              <MyPosts
+                items={items}
+                onDelete={deleteItem}
+                onEdit={setEditingItem}
+              />
+            </ProtectedRoute>
+          }
+        />
 
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />

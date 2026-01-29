@@ -1,18 +1,6 @@
 import { useState } from "react";
 import ItemCard from "../components/ItemCard";
 
-const DUMMY_ITEMS = [
-  {
-    id: "1",
-    title: "Wallet",
-    description: "Black leather wallet near library",
-    type: "lost",
-    contact: "1234567890",
-    createdBy: { id: "1", name: "Demo User" },
-    createdAt: Date.now(),
-  },
-];
-
 function Home({ items, onDelete, onEdit }) {
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
@@ -35,32 +23,35 @@ function Home({ items, onDelete, onEdit }) {
       <input
         placeholder="Search items..."
         value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={e => setSearch(e.target.value)}
       />
 
       <div className="filters">
-        {["all", "lost", "found"].map(t => (
+        {["all", "lost", "found"].map(type => (
           <button
-            key={t}
-            className={filter === t ? "active" : ""}
-            onClick={() => setFilter(t)}
+            key={type}
+            className={filter === type ? "active" : ""}
+            onClick={() => setFilter(type)}
           >
-            {t.toUpperCase()}
+            {type.toUpperCase()}
           </button>
         ))}
       </div>
 
-      {filteredItems.map(item => (
-        <ItemCard
-          key={item.id}
-          item={item}
-          onDelete={onDelete}
-          onEdit={onEdit}
-        />
-      ))}
+      {filteredItems.length === 0 ? (
+        <p>No matching items found.</p>
+      ) : (
+        filteredItems.map(item => (
+          <ItemCard
+            key={item.id}
+            item={item}
+            onDelete={onDelete}
+            onEdit={onEdit}
+          />
+        ))
+      )}
     </div>
   );
 }
-
 
 export default Home;

@@ -9,7 +9,7 @@ nav {
   justify-content: space-between;
   align-items: center;
   background-color: #007bff;
-  padding: 20px 20px;
+  padding: 16px 20px;
 }
 
 nav a {
@@ -31,25 +31,15 @@ nav button {
 
 .container {
   width: 600px;
-  margin: auto;
-  margin-top: 10px;
-  padding: 20px 20px;
+  margin: 16px auto;
+  padding: 20px;
   background-color: #f0f8ff;
+  border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
-h1 {
+h1, h2 {
   text-align: center;
-}
-
-.filters {
-  display: flex;
-  gap: 10px;
-  margin: 12px 0;
-}
-
-.filters button.active {
-  background-color: #0056b3;
 }
 
 input, textarea, select {
@@ -97,4 +87,84 @@ button:hover {
 
 .logout-btn:hover {
   background-color: #b02a37;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.filters button.active {
+  background-color: #0056b3;
+}
+
+.card {
+  background: white;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  position: relative;
+}
+
+.card h3 {
+  margin: 0 0 6px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 2px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.badge.lost {
+  background-color: #dc3545;
+  color: white;
+}
+
+.badge.found {
+  background-color: #198754;
+  color: white;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.date {
+  font-size: 12px;
+  color: #666;
+  margin-top: 10px;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  text-align: center;
+}
+
+.modal p {
+  margin-bottom: 12px;
 }

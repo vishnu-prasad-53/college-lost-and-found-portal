@@ -1,10 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 function timeAgo(timestamp) {
-  const diff = Date.now() - timestamp;
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-
+  const days = Math.floor((Date.now() - timestamp) / 86400000);
   if (days === 0) return "Today";
   if (days === 1) return "1 day ago";
   return `${days} days ago`;
@@ -12,6 +11,7 @@ function timeAgo(timestamp) {
 
 function ItemCard({ item, onDelete, onEdit }) {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [confirm, setConfirm] = useState(false);
 
   return (
@@ -40,9 +40,15 @@ function ItemCard({ item, onDelete, onEdit }) {
               <div className="modal-backdrop">
                 <div className="modal">
                   <p>Are you sure?</p>
-
                   <div className="actions">
-                    <button onClick={() => onEdit(item)}>Edit</button>
+                    <button
+                      onClick={() => {
+                        onEdit(item);
+                        navigate("/add");
+                      }}
+                    >
+                      Edit
+                    </button>
                     <button onClick={() => onDelete(item.id)}>Yes</button>
                     <button onClick={() => setConfirm(false)}>Cancel</button>
                   </div>

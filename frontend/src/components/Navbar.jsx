@@ -1,15 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 function Navbar() {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <nav>
       <div>
         <Link to="/">Home</Link>
         {user && <Link to="/add">Add Item</Link>}
-        <Link to="/myposts">My Posts</Link>
+        {user && <Link to="/myposts">My Posts</Link>}
       </div>
 
       <div>
@@ -19,7 +20,15 @@ function Navbar() {
             <Link to="/signup">Sign Up</Link>
           </>
         ) : (
-          <button className="logout-btn" onClick={logout}>Logout</button>
+          <button
+            className="logout-btn"
+            onClick={() => {
+              logout();
+              navigate("/signin");
+            }}
+          >
+            Logout
+          </button>
         )}
       </div>
     </nav>
